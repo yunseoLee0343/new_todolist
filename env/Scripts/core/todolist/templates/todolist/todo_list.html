@@ -7,10 +7,80 @@
 </head>
 <body>
 <h1>Todo List</h1>
-<ul>
+<table id="todo-table">
+    <tr>
+        <th>Item</th>
+        <th>Action</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
     {% for item in todo_items %}
-    <li>{{ item.item_text }}</li>
+    <tr>
+        <td>{{ item.item_text }}</td>
+        <td>{{ item.status }}</td>
+        <td><a href="#" onclick="editItem({{ item.pk }})">Edit</a></td>
+        <td><a href="#" onclick="deleteItem({{ item.pk }})">Delete</a></td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
+<form id="add-item-form">
+    <input type="text" id="item-input" placeholder="Add new item">
+    <button type="button" onclick="addRow()">Add</button>
+</form>
+<script>
+    function addRow() {
+        // table element 찾기
+        const table = document.getElementById('todo-table');
+
+        // 입력된 아이템 가져오기
+        const newItemText = document.getElementById('item-input').value.trim();
+
+        // 아이템이 비어있는지 확인
+        if (newItemText !== '') {
+            // 새로운 행(Row) 추가
+            const newRow = table.insertRow();
+
+            // 새 행(Row)에 Cell 추가
+            const newCell1 = newRow.insertCell(0);
+            const newCell2 = newRow.insertCell(1);
+            const newCell3 = newRow.insertCell(2);
+            const newCell4 = newRow.insertCell(3);
+
+            // Cell에 텍스트 추가
+            newCell1.innerText = newItemText;
+            newCell2.innerText = '';
+
+            // "Edit" 링크 생성
+            const editLink = document.createElement('a');
+            editLink.href = '#'; // 임시로 '#' 사용
+            editLink.innerText = 'Edit';
+            editLink.onclick = function() { editItem(newRow); };
+            newCell3.appendChild(editLink);
+
+            // "Delete" 링크 생성
+            const deleteLink = document.createElement('a');
+            deleteLink.href = '#'; // 임시로 '#' 사용
+            deleteLink.innerText = 'Delete';
+            deleteLink.onclick = function() { deleteItem(newRow); };
+            newCell4.appendChild(deleteLink);
+
+            // 입력 필드 비우기
+            document.getElementById('item-input').value = '';
+        }
+    }
+
+    function editItem(row) {
+        const newText = prompt('Enter new text:');
+        if (newText !== null) {
+            row.cells[0].innerText = newText;
+        }
+    }
+
+    function deleteItem(row) {
+        if (confirm('Are you sure you want to delete this item?')) {
+            row.remove();
+        }
+    }
+</script>
 </body>
 </html>
