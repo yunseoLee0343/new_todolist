@@ -16,6 +16,18 @@
             margin-top: 20px;
         }
 
+        #todo-table th:nth-child(1),
+        #todo-table td:nth-child(1) {
+            width: 80%;
+        }
+
+        #todo-table th:nth-child(2),
+        #todo-table td:nth-child(2),
+        #todo-table th:nth-child(3),
+        #todo-table td:nth-child(3) {
+            width: 10%;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -26,7 +38,7 @@
         th, td {
             border: 1px solid #dddddd;
             padding: 12px;
-            text-align: left;
+            text-align: center;
         }
 
         th {
@@ -72,19 +84,18 @@
 <table id="todo-table">
     <tr>
         <th>Item</th>
-        <th>Action</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
     {% for item in todo_items %}
     <tr>
         <td>{{ item.item_text }}</td>
-        <td>{{ item.status }}</td>
         <td><a href="#" onclick="editItem({{ item.pk }})">Edit</a></td>
         <td><a href="#" onclick="deleteItem({{ item.pk }})">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
+
 
 <form id="add-item-form">
     <input type="text" id="item-input" placeholder="Add new item">
@@ -107,25 +118,23 @@
             const newCell1 = newRow.insertCell(0);
             const newCell2 = newRow.insertCell(1);
             const newCell3 = newRow.insertCell(2);
-            const newCell4 = newRow.insertCell(3);
 
             // Cell에 텍스트 추가
             newCell1.innerText = newItemText;
-            newCell2.innerText = '';
 
             // "Edit" 링크 생성
             const editLink = document.createElement('a');
             editLink.href = '#'; // 임시로 '#' 사용
             editLink.innerText = 'Edit';
             editLink.onclick = function() { editItem(newRow); };
-            newCell3.appendChild(editLink);
+            newCell2.appendChild(editLink);
 
             // "Delete" 링크 생성
             const deleteLink = document.createElement('a');
             deleteLink.href = '#'; // 임시로 '#' 사용
             deleteLink.innerText = 'Delete';
             deleteLink.onclick = function() { deleteItem(newRow); };
-            newCell4.appendChild(deleteLink);
+            newCell3.appendChild(deleteLink);
 
             // 입력 필드 비우기
             document.getElementById('item-input').value = '';
