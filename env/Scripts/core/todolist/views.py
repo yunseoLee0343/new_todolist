@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from models import TodoItem
+from .models import TodoItem
 
 def todo_list(request):
     todo_items = TodoItem.objects.all()
