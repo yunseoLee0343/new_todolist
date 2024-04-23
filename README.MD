@@ -19,7 +19,7 @@ You can also delete items by pressing the `Delete` button.
 - develop/todos-advanced: The branch for the advanced development of the project
     - Adopted session to store data of user
     - Implemented AJAX to update the page without refreshing, but failed (I'm fixing it).
-
+![branch.png](readmeAssets%2Fbranch.png)
 
 ## Further development
 1. Adopt WebSocket to manage multiple users.
