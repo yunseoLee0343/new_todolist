@@ -90,17 +90,18 @@
     {% for item in todo_items %}
     <tr>
         <td>{{ item.item_text }}</td>
-        <td><a href="#" onclick="editItem({{ item.pk }})">Edit</a></td>
-        <td><a href="#" onclick="deleteItem({{ item.pk }})">Delete</a></td>
+        <td><a href="{% url 'edit_item' item.pk %}">Edit</a></td>
+        <td><a href="{% url 'delete_item' item.pk %}">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
 
-
-<form id="add-item-form">
-    <input type="text" id="item-input" placeholder="Add new item">
-    <button type="button" onclick="addRow()">Add</button>
+<form id="add-item-form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add</button>
 </form>
+</body>
 <script>
     function addRow() {
         // table element 찾기
@@ -154,5 +155,4 @@
         }
     }
 </script>
-</body>
 </html>
